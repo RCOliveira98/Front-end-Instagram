@@ -33,8 +33,8 @@
 										 '</span>'+
 										 '<img class="img-fluid" src="http://localhost:3000/imagens/'+element.url_img+'"/>'+
 										 '<div class="comentar">'+
-										    '<input type="text" class="form-control input_comentario" placeholder="Digite seu comentário"/>'+
-											'<button class="btn btn-default btn_postagem" type="button">Comentar</button>'+
+										    '<input type="text" id="'+element._id+'" class="form-control input_comentario" placeholder="Digite seu comentário"/>'+
+											'<button class="btn btn-default btn_postagem" type="button" value="'+element._id+'">Comentar</button>'+
 										'</div>'+
 									'</div>'
 								);
@@ -42,6 +42,12 @@
 						}else {
 							console.log('Café');
 						}
+						$('.btn_postagem').click(function() {
+							let idBtn = this.value;
+							let idInput = idBtn;
+							let comentario = $('#'+idInput).val();
+							alert(comentario);
+						});
 					};
 					myXml.send();
 				}
