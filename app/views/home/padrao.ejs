@@ -17,6 +17,32 @@
 		<script>
 			$(document).ready(function(){
 
+				function carrega_postagens(){
+					var myXml = new XMLHttpRequest();
+					myXml.open('GET', 'http://localhost:3000/api');
+					myXml.onload = function() {
+						if(myXml.status === 200){
+							var data = $.parseJSON(myXml.responseText);
+
+							data.forEach(element => {
+								console.log(element);
+								$('#container_timeline').append(
+									'<div class="publicacao">'+
+										 '<span class="titulo">'+
+										 element.title+
+										 '</span>'+
+										 '<img class="img-fluid" src="http://localhost:3000/imagens/'+element.url_img+'"/>'+
+									'</div>'
+								);
+							});
+						}else {
+							console.log('Café');
+						}
+					};
+					myXml.send();
+				}
+
+                carrega_postagens();
 				$('#btn_incluir').click(function(){
 					$('#container_timeline').hide();
 					$('#container_form').show();
@@ -26,6 +52,31 @@
 					$('#container_timeline').show();
 					$('#container_form').hide();
 					return false;
+				});
+
+				$('#btn-publicar').click(function(){
+					// criando um obj formData
+					var formData = new FormData();
+					var arquivo = document.getElementById('arquivo').files[0];
+					var titulo = document.getElementById('titulo').value;
+
+					formData.append('arquivo', arquivo);
+					formData.append('titulo',  titulo);
+
+					// criando objeto xml http request
+					var xmlHttp = new XMLHttpRequest();
+
+					// modificação de estado
+					xmlHttp.onreadystatechange = function() {
+						if(xmlHttp.readyState == 4) {
+							var resposta = xmlHttp.responseText;
+							document.getElementById('mensagem').innerHTML;
+						} 
+					}
+
+					// envio do request
+					xmlHttp.open('POST', 'http://localhost:3000/api');
+					xmlHttp.send(formData);
 				});
 
 			});
