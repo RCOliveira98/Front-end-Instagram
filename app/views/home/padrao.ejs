@@ -33,7 +33,7 @@
 										 '</span>'+
 										 '<img class="img-fluid" src="http://localhost:3000/imagens/'+element.url_img+'"/>'+
 										 '<div class="comentar">'+
-										    '<input type="text" id="'+element._id+'" class="form-control input_comentario" placeholder="Digite seu comentário"/>'+
+										    '<input type="text" id="'+element._id+'" name="comentario" class="form-control input_comentario" placeholder="Digite seu comentário"/>'+
 											'<button class="btn btn-default btn_postagem" type="button" value="'+element._id+'">Comentar</button>'+
 										'</div>'+
 									'</div>'
@@ -46,7 +46,17 @@
 							let idBtn = this.value;
 							let idInput = idBtn;
 							let comentario = $('#'+idInput).val();
-							alert(comentario);
+							var xmlAddComentario = new XMLHttpRequest();
+							xmlAddComentario.open('PUT', 'http://localhost:3000/api/' + idBtn);
+							xmlAddComentario.setRequestHeader('Content-Type', 'application/json');
+
+							xmlAddComentario.onload = function(){
+									if(xmlAddComentario.status === 200){
+										window.location.href = '/home';
+									}
+								};
+
+								xmlAddComentario.send(JSON.stringify({ comentario : comentario }));
 						});
 					};
 					myXml.send();
