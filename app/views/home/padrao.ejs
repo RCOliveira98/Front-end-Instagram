@@ -23,22 +23,35 @@
 					myXml.onload = function() {
 						if(myXml.status === 200){
 							var data = $.parseJSON(myXml.responseText);
+							console.log(data);
 
-							data.forEach(element => {
-								console.log(element);
+							for(i=0; i < data.length; i++) {
 								$('#container_timeline').append(
 									'<div class="publicacao">'+
 										 '<span class="titulo">'+
-										 element.title+
+										 data[i].title+
 										 '</span>'+
-										 '<img class="img-fluid" src="http://localhost:3000/imagens/'+element.url_img+'"/>'+
+										 '<img class="img-fluid" src="http://localhost:3000/imagens/'+data[i].url_img+'"/>'+
+										 '<div class="comentarios" id="comentario_'+data[i]._id+'"></div>'+
 										 '<div class="comentar">'+
-										    '<input type="text" id="'+element._id+'" name="comentario" class="form-control input_comentario" placeholder="Digite seu comentário"/>'+
-											'<button class="btn btn-default btn_postagem" type="button" value="'+element._id+'">Comentar</button>'+
+										    '<input type="text" id="'+data[i]._id+'" name="comentario" class="form-control input_comentario" placeholder="Digite seu comentário"/>'+
+											'<button class="btn btn-default btn_postagem" type="button" value="'+data[i]._id+'">Comentar</button>'+
 										'</div>'+
 									'</div>'
 								);
-							});
+
+								console.log('É indefinido: ' + data[i].comentarios != undefined);
+								
+								if(data[i].comentarios){
+									comentarios = data[i].comentarios;
+									console.log(comentarios);
+									for(j=0; j < comentarios.length; j++){
+										console.log(comentarios[j].comentario);
+										$('.comentarios').append('<div class="txt_comentario">'+ comentarios[j].comentario +'</div>');
+									}
+								}
+								
+							}
 						}else {
 							console.log('Café');
 						}
