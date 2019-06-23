@@ -42,12 +42,12 @@
 
 								console.log('É indefinido: ' + data[i].comentarios != undefined);
 								
-								if(data[i].comentarios){
+								if(data[i].comentarios != undefined || data[i].comentarios != null){
 									comentarios = data[i].comentarios;
 									console.log(comentarios);
 									for(j=0; j < comentarios.length; j++){
 										console.log(comentarios[j].comentario);
-										$('.comentarios').append('<div class="txt_comentario">'+ comentarios[j].comentario +'</div>');
+										$('#comentario_'+data[i]._id).append('<div class="txt_comentario"><span id="'+comentarios[j].id_comentario+'" class="btn btn_remover_postagem">X</span>'+ comentarios[j].comentario +'</div>');
 									}
 								}
 								
